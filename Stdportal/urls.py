@@ -22,4 +22,6 @@ urlpatterns = [
     path('', views.index, name = 'index'),
     path('register', views.register, name = 'register'),
     path('automate', views.automate, name = 'automate'),
+    path('timetable', views.timetable, name = 'timetable'),
+    path('autoregister', views.autoregister, name = 'automate register'),
 ]

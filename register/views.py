@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from . models import Student, TimeTable, AutomateRegister
-from . forms import UserForm, StudentForm
+from . forms import UserForm, StudentForm, TimeTableForm, AutomateForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -51,3 +51,22 @@ def register(request):
 
 def automate(request):
     return HttpResponseRedirect('/')
+
+def autoregister(request):
+    if request.method == "POST":
+        return HttpResponseRedirect('/')
+
+    else:
+        form = AutomateForm()
+        return render(request, 'autoregister.html', {'form': form})
+
+
+def timetable(request):
+    if request.method == "POST":
+        return HttpResponseRedirect('/')
+
+    else:
+        form = TimeTableForm()
+        return render(request, 'timetableregister.html', {'form': form})
+
+

@@ -3,6 +3,10 @@
 {% block body_block %}
 
 <div class = "container mt-5">
+    <h1>Click here to add timetable</h1>
+    <a href="{% url 'timetable' %}" class="btn btn-primary">TimeTable</a>
+    <h1>Click here to register MicroSoft Teams details for automation</h1>
+    <a href="{% url 'automate register' %}" class="btn btn-primary">Auto Register</a>
     <h1>Click here to automate your classes on MicroSoft Teams</h1>
     <a href="{% url 'automate' %}" class="btn btn-primary">Start</a>
 </div>
