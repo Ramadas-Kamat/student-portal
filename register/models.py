@@ -16,3 +16,10 @@ class TimeTable(models.Model):
     start_time = models.CharField(max_length = 20)
     end_time = models.CharField(max_length = 20)
 
+class AutomateRegister(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    msteam_gmail_id = models.EmailField()
+    msteam_password = models.CharField(max_length = 50)
+    msteam_organisation_name = models.CharField(max_length = 50)
+    discord_webhooklink = models.CharField(max_length = 500)
+
