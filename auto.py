@@ -47,8 +47,6 @@ def bot(email, password, webhooklink, orgname, timetable):
         global hook
         #login required
         print("logging in")
-
-        #emailField = driver.find_element_by_xpath('//*[@id="i0116"]')
         emailField = WebDriverWait(driver,20000).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="i0116"]')))
         emailField.click()
         emailField.send_keys(email)
@@ -170,10 +168,10 @@ def bot(email, password, webhooklink, orgname, timetable):
         WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="teams-app-bar"]/ul/li[3]'))).click()
         #time.sleep(5)
 
-        #driver.find_element_by_xpath('//*[@id="hangup-button"]').click()
+        
         WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="hangup-button"]'))).click()
         print("Class left")
-        # discord_webhook.send_msg(class_name=class_name,status="left",start_time=start_time,end_time=end_time)
+        
         hook = Webhook(webhooklink)
         hook.send(f"Bot has left class: {class_name} at {end_time}")
         hook.send("--------------------------------------------------")
@@ -195,7 +193,3 @@ def bot(email, password, webhooklink, orgname, timetable):
         # is pending to run or not
         schedule.run_pending()
         time.sleep(10)
-
-
-    # if __name__=="__main__":
-    # 	sched()
