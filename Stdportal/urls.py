@@ -21,6 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name = 'index'),
     path('register', views.register, name = 'register'),
+    path('login', views.user_login, name = 'login'),
+    path('logout', views.user_logout, name = 'logout'),
     path('automate', views.automate, name = 'automate'),
     path('timetable', views.timetable, name = 'timetable'),
     path('autoregister', views.autoregister, name = 'automate register'),

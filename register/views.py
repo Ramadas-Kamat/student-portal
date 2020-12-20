@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from . models import Student, TimeTable, AutomateRegister
 from . forms import UserForm, StudentForm, TimeTableForm, AutomateForm
@@ -30,30 +30,42 @@ def register(request):
         studentform = StudentForm()
         return render(request, 'register.html', {'userform': userform, 'studentform': studentform})
 
-# def user_login(request):
-#     if request.method == "POST":
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
-#         user = authenticate(username=username, password=password)
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-#         if user:
-#             if user.is_active:
-#                 login(request, user)            
-#             else:
-#                 return HttpResponse('User not active')
+        user = authenticate(username=username, password=password)
 
-#         else:
-#             return HttpResponse('Invalid credentials')
+        if user:
+            if user.is_active:
+                login(request, user)            
+            else:
+                return HttpResponse('User not active')
 
-#     else:
-#         return render(request, 'dbmsA/login.html')
+        else:
+            return HttpResponse('Invalid credentials')
+        return HttpResponseRedirect('/')
+
+    else:
+        return render(request, 'login.html')
 
 def automate(request):
     return HttpResponseRedirect('/')
 
 def autoregister(request):
+    user = get_object_or_404(User, username = request.user)
     if request.method == "POST":
+        autoform = AutomateForm(request.POST)
+        if autoform.is_valid():
+            automate = autoform.save(commit = False)
+            automate.user = user
+            automate.save()
         return HttpResponseRedirect('/')
 
     else:
@@ -62,8 +74,14 @@ def autoregister(request):
 
 
 def timetable(request):
+    user = get_object_or_404(User, username = request.user)
     if request.method == "POST":
-        return HttpResponseRedirect('/')
+        timetableform = TimeTableForm(request.POST)
+        if timetableform.is_valid():
+            timetable = timetableform.save(commit = False)
+            timetable.user = user
+            timetable.save()
+        return HttpResponseRedirect('/timetable')
 
     else:
         form = TimeTableForm()
