@@ -14,3 +14,14 @@ class StudentForm(forms.ModelForm):
     class Meta():
         model = Student
         fields = ('name', 'college', 'usn_no',)
+
+class TimeTableForm(forms.ModelForm):
+    class Meta():
+        model = TimeTable
+        fields = ('day','class_name','start_time','end_time',)
+
+class AutomateForm(forms.ModelForm):
+    class Meta():
+        model = AutomateRegister
+        fields = ('msteam_gmail_id','msteam_password','msteam_organisation_name','discord_webhooklink',)
+        

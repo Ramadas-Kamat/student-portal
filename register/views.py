@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from . models import Student, TimeTable, AutomateRegister
 from . forms import UserForm, StudentForm
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required                   #view required to user to logged in this decorator is used
 
 
 # Create your views here.
@@ -44,3 +48,6 @@ def register(request):
 
 #     else:
 #         return render(request, 'dbmsA/login.html')
+
+def automate(request):
+    return HttpResponseRedirect('/')
