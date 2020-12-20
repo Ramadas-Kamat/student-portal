@@ -25,5 +25,6 @@ urlpatterns = [
     path('logout', views.user_logout, name = 'logout'),
     path('automate', views.automate, name = 'automate'),
     path('timetable', views.timetable, name = 'timetable'),
+    path('deletettdata/<int:id>', views.deletettdata, name = 'deletettdata'),
     path('autoregister', views.autoregister, name = 'automate register'),
 ]

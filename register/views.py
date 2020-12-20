@@ -6,7 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required                   #view required to user to logged in this decorator is used
-
+import auto
+from datetime import datetime
 
 # Create your views here.
 
@@ -55,24 +56,59 @@ def user_login(request):
     else:
         return render(request, 'login.html')
 
+@login_required(login_url = "/login")
 def automate(request):
-    return HttpResponseRedirect('/')
+    if TimeTable.objects.filter(user = request.user).exists() and AutomateRegister.objects.filter(user = request.user):
+        msteam = get_object_or_404(AutomateRegister, user = request.user)
+        email = msteam.msteamgmailid
+        password = msteam.msteampassword
+        webhooklink = msteam.discordwebhooklink
+        orgname = msteam.msteamorganisationname
+        day = datetime.today().strftime("%A")
+        timetable = TimeTable.objects.filter(user = request.user, day = day)
+        auto.bot(email, password, webhooklink, orgname, timetable)
+        return HttpResponseRedirect('/')
 
+    elif not (TimeTable.objects.filter(user = request.user).exists() or AutomateRegister.objects.filter(user = request.user).exists()):
+        return HttpResponse("Register TimeTable and MicroSoft teams details")
+    
+    elif not TimeTable.objects.filter(user = request.user).exists():
+        return HttpResponse("Register TimeTable")
+    
+    elif not AutomateRegister.objects.filter(user = request.user).exists():
+        return HttpResponse("Register MicroSoft teams details")
+
+
+@login_required(login_url = "/login")
 def autoregister(request):
     user = get_object_or_404(User, username = request.user)
     if request.method == "POST":
-        autoform = AutomateForm(request.POST)
-        if autoform.is_valid():
-            automate = autoform.save(commit = False)
-            automate.user = user
-            automate.save()
-        return HttpResponseRedirect('/')
+        if AutomateRegister.objects.filter(user = request.user).exists():
+            instance = get_object_or_404(AutomateRegister, user = request.user)
+            autoform = AutomateForm(request.POST, instance = instance)
+            if autoform.is_valid():
+                automate = autoform.save(commit = False)
+                automate.user = user
+                automate.save()
+            return HttpResponseRedirect('/')
+        else:
+            autoform = AutomateForm(request.POST)
+            if autoform.is_valid():
+                automate = autoform.save(commit = False)
+                automate.user = user
+                automate.save()
+            return HttpResponseRedirect('/')
 
     else:
-        form = AutomateForm()
-        return render(request, 'autoregister.html', {'form': form})
+        if AutomateRegister.objects.filter(user = request.user).exists():
+            instance = get_object_or_404(AutomateRegister, user = request.user)
+            form = AutomateForm(instance = instance)
+            return render(request, 'autoregister.html', {'form': form})
+        else:
+            form = AutomateForm()
+            return render(request, 'autoregister.html', {'form': form})
 
-
+@login_required(login_url = "/login")
 def timetable(request):
     user = get_object_or_404(User, username = request.user)
     if request.method == "POST":
@@ -81,10 +117,21 @@ def timetable(request):
             timetable = timetableform.save(commit = False)
             timetable.user = user
             timetable.save()
-        return HttpResponseRedirect('/timetable')
+            form = TimeTableForm()
+            timetabledata = TimeTable.objects.filter(user = request.user)
+            return render(request, 'timetableregister.html', {'form': form, 'timetabledata': timetabledata})
 
     else:
         form = TimeTableForm()
-        return render(request, 'timetableregister.html', {'form': form})
+        timetabledata = TimeTable.objects.filter(user = request.user)
+        return render(request, 'timetableregister.html', {'form': form, 'timetabledata': timetabledata})
+
+@login_required(login_url = "/login")
+def deletettdata(request, id):
+    TimeTable.objects.filter(id=id).delete()
+    return HttpResponseRedirect('/timetable')
+
+    
+
 
 

@@ -23,5 +23,5 @@ class TimeTableForm(forms.ModelForm):
 class AutomateForm(forms.ModelForm):
     class Meta():
         model = AutomateRegister
-        fields = ('msteam_gmail_id','msteam_password','msteam_organisation_name','discord_webhooklink',)
-        
+        fields = ('msteamgmailid','msteampassword','msteamorganisationname','discordwebhooklink',)
+
