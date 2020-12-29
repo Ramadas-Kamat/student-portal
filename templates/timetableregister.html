@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<form method = "POST">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value = "Register">
+</form>
+
+<div class="container mt-5">
+    <h2 class="alert alert-primary">Time Table</h2>
+    <hr>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Class Name</th>
+          <th>Start time</th>
+          <th>End time</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in timetabledata %}  
+        <tr>
+          <td>{{u.day}}</td>
+          <td>{{u.class_name}}</td>
+          <td>{{u.start_time}}</td>
+          <td>{{u.end_time}}</td>
+          <td><a href="{% url 'deletettdata' u.id %}" class = "btn btn-danger">Delete</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+  </div>
+
+{% endblock %}

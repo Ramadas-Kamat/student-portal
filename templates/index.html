@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCL Maxo</title>
-</head>
-<body>
-    <h1>Start your work</h1>
-    <div>
-        Add your html files in templates folder
-    </div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<div class = "container mt-5">
+    <h1>Click here to add timetable</h1>
+    <a href="{% url 'timetable' %}" class="btn btn-primary">TimeTable</a>
+    <h1>Click here to register MicroSoft Teams details for automation</h1>
+    <a href="{% url 'automate register' %}" class="btn btn-primary">Auto Register</a>
+    <h1>Click here to automate your classes on MicroSoft Teams</h1>
+    <a href="{% url 'automate' %}" class="btn btn-primary">Start</a>
+</div>
+
+{% endblock %}
