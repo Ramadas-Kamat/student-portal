@@ -7,7 +7,7 @@ class Student(models.Model):
     usn = models.CharField(max_length=10,primary_key=True)
     address = models.TextField()
     sem = models.IntegerField(default=1)
-    classrm = models.ForeignKey('Classroom',null=True,blank=False,\
+    classrm = models.ForeignKey('Classroom',null=True,blank=True,\
         on_delete=models.CASCADE)
 
 class Faculty(models.Model):
