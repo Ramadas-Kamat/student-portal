@@ -171,11 +171,4 @@ def bot(email, password, webhooklink, orgname, timetable):#email, password, webh
         schedule.every().day.at(start_time).do(joinclass,name,start_time,end_time)
         print("Scheduled class '%s' on %s at %s"%(name,day,start_time))
 
-    #Start browser
-    #
-    start_browser()
-    while True:
-        # Checks whether a scheduled task
-        # is pending to run or not
-        schedule.run_pending()
-        time.sleep(10)
+    
