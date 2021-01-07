@@ -3,15 +3,14 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime
+from selenium.webdriver.common.action_chains import ActionChains
+from dhooks import Webhook
 import time
 import re
 import os.path
 from os import path
-import sqlite3
 import schedule
-from datetime import datetime
-from selenium.webdriver.common.action_chains import ActionChains
-from dhooks import Webhook
 
 def bot(email, password, webhooklink, orgname, timetable):#email, password, webhooklink, orgname, timetable
     opt = Options()
@@ -29,18 +28,7 @@ def bot(email, password, webhooklink, orgname, timetable):#email, password, webh
 
     driver = None
     URL = "https://teams.microsoft.com"
-
-    def start_browser():
-        global driver
-        PATH = "chrome/chromedriver.exe"
-        driver = webdriver.Chrome(options=opt, executable_path=PATH)
-        driver.get(URL)
-
-        WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.TAG_NAME,'body')))
-
-        if("login.microsoftonline.com" in driver.current_url):
-            login()
-
+    
     def login():
         global driver
         global hook
@@ -50,21 +38,17 @@ def bot(email, password, webhooklink, orgname, timetable):#email, password, webh
         emailField.click()
         emailField.send_keys(email)
         #time.sleep(5)
-        #driver.find_element_by_xpath('//*[@id="idSIButton9"]').click() #Next button
         WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="idSIButton9"]'))).click()
-        #time.sleep(10)
-        #passwordField = driver.find_element_by_xpath('//*[@id="i0118"]')
+        
         passwordField = WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="i0118"]')))
         passwordField.click()
-        #time.sleep(10)
+        
         passwordField.send_keys(password)
 
         #driver.find_element_by_xpath('//*[@id="idSIButton9"]').click() #Sign in button
         WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="idSIButton9"]'))).click()
         hook = Webhook(webhooklink)
         hook.send("Successfully logged in")
-
-        #time.sleep(10)
 
         try:
             WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'/html/body/promote-desktop/div/div/div/div[1]/div[2]/div/a'))).click()	
@@ -83,6 +67,16 @@ def bot(email, password, webhooklink, orgname, timetable):#email, password, webh
             WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="page-content-wrapper"]/div[1]/div/div[2]/div[4]/button'))).click()
         except:
             pass
+
+
+    def start_browser():
+        global driver
+        PATH = "chrome/chromedriver.exe"
+        driver = webdriver.Chrome(options=opt, executable_path=PATH)
+        driver.get(URL)
+        WebDriverWait(driver,30000).until(EC.visibility_of_element_located((By.TAG_NAME,'body')))
+        if("login.microsoftonline.com" in driver.current_url):
+            login()
 
     def joinclass(class_name,start_time,end_time):
         global driver
