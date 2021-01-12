@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block body_block %}
-
+<style>
+  .table{
+    margin-bottom: 50px;
+  }
+</style>
 <form method = "POST">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value = "Register">

@@ -14,6 +14,9 @@ from datetime import datetime
 def index(request):
     return render(request,'index.html')
 
+def autoClazz(request):
+    return render(request,'index1.html')
+
 def register(request):
     if request.method == "POST":
         userform = UserForm(request.POST)
