@@ -63,38 +63,25 @@ def bot(email, password, webhooklink, orgname, timetable):#email, password, webh
         WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="idSIButton9"]'))).click()
         hook = Webhook(webhooklink)
         hook.send("Successfully logged in")
-        
-        try:
-            time.sleep(5)
-            driver.find_element_by_xpath('/html/body/promote-desktop/div/div/div/div[1]/div[2]/div/a').click()
-        except:
-            #print("except")
-            pass
-        # WebDriverWait(driver,2000).until(EC.visibility_of_element_located((By.XPATH,'/html/body/promote-desktop/div/div/div/div[1]/div[2]/div/a'))).click()	
-        # print("org")
-        # try:
-        #     WebDriverWait(driver,200).until(EC.visibility_of_element_located((By.XPATH,'/html/body/promote-desktop/div/div/div/div[1]/div[2]/div/a'))).click()	
-        #     #time.sleep(10)
-        # except:
-        #     pass
-        # # time.sleep(5)
+
+        time.sleep(5)
+        # WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'/html/body/promote-desktop/div/div/div/div[1]/div[2]/div/a'))).click()	
 
         try:
-            #print("Org")
-            #driver.refresh()
+            WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'/html/body/promote-desktop/div/div/div/div[1]/div[2]/div/a'))).click()	
+            #time.sleep(10)
+        except:
+            pass
+        
+        try:
+            WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.CLASS_NAME,'guest-license-error-dropdown-title'))).click()
             time.sleep(5)
-            driver.find_element_by_class_name('guest-license-error-dropdown-title').click()
-            #WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.CLASS_NAME,'guest-license-error-dropdown-title'))).click()
-            time.sleep(2)
             list_of_org = driver.find_elements_by_class_name('tenant-name')
             for org in list_of_org:
                 if org.text == orgname:#org_name
                     org.click()
                     break
             WebDriverWait(driver,20000).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="page-content-wrapper"]/div[1]/div/div[2]/div[4]/button'))).click()
-            time.sleep(2)
-            driver.refresh()
-
         except:
             pass
 
