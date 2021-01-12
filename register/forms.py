@@ -21,6 +21,7 @@ class TimeTableForm(forms.ModelForm):
         fields = ('day','class_name','start_time','end_time',)
 
 class AutomateForm(forms.ModelForm):
+    msteampassword =  forms.CharField(widget=forms.PasswordInput(attrs={'required':'true'}))
     class Meta():
         model = AutomateRegister
         fields = ('msteamgmailid','msteampassword','msteamorganisationname','discordwebhooklink',)
