@@ -1,2 +1,6 @@
-1. pip install selenium
-2. pip install dhooks
+argon2-cffi==20.1.0
+bcrypt==3.2.0
+certifi==2020.6.20
+dhooks==1.1.4
+schedule==0.6.0
+selenium==3.141.0
