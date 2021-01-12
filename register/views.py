@@ -69,8 +69,11 @@ def automate(request):
         orgname = msteam.msteamorganisationname
         day = datetime.today().strftime("%A")
         timetable = TimeTable.objects.filter(user = request.user, day = day)
-        auto.bot(email, password, webhooklink, orgname, timetable)
-        return HttpResponseRedirect('/')
+        try:
+            auto.bot(email, password, webhooklink, orgname, timetable)
+            return HttpResponseRedirect('/')
+        except:
+            return HttpResponse("Please check your internet connection or there might be any technical error please reset the app")
 
     elif not (TimeTable.objects.filter(user = request.user).exists() or AutomateRegister.objects.filter(user = request.user).exists()):
         return HttpResponse("Register TimeTable and MicroSoft teams details")
