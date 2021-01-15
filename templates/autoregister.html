@@ -1,10 +1,49 @@
 {% extends 'base.html' %}
 
 {% block body_block %}
+<style>
 
+/* .container {
+    box-shadow: 12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 8px -4px rgba(31, 73, 125, 0.8);
+} */
+/* Full-width input fields */
+input[type=email],
+input[type=text],
+input[type=select],
+input[type=date],
+input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 5px 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=email]:focus,
+input[type=text]:focus,
+input[type=select]:focus,
+input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+    border: 1px solid gray;
+    margin-bottom: 25px;
+}
+
+label{
+    font-size: large;
+    color: black;
+}
+</style>
+<div class="container">
 <form method = "POST">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value = "Register">
+    <input type="submit" class="btn btn-primary" value = "Register">
 </form>
+</div>
 
 {% endblock %}

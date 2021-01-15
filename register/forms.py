@@ -21,7 +21,10 @@ class TimeTableForm(forms.ModelForm):
         fields = ('day','class_name','start_time','end_time',)
 
 class AutomateForm(forms.ModelForm):
-    msteampassword =  forms.CharField(widget=forms.PasswordInput(attrs={'required':'true'}))
+    msteamgmailid = forms.CharField(max_length = 50,label="MS teams Email:",widget=forms.TextInput(attrs={'placeholder': 'Enter Username'}))
+    msteampassword =  forms.CharField(label="MS Teams Password:", widget=forms.PasswordInput(attrs={'required':'true'}))
+    msteamorganisationname = forms.CharField(max_length = 50,label="Organization Name:",widget=forms.TextInput(attrs={'placeholder': 'Enter Organization Name:'}))
+    discordwebhooklink = forms.CharField(max_length = 1000,label="Discord Webhook Link:",widget=forms.TextInput(attrs={'placeholder': 'Enter Discord Webhook Link:'}))
     class Meta():
         model = AutomateRegister
         fields = ('msteamgmailid','msteampassword','msteamorganisationname','discordwebhooklink',)
