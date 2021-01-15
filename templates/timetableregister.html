@@ -5,11 +5,16 @@
   .table{
     margin-bottom: 50px;
   }
+
 </style>
+
+</style>
+<div class="container">
 <form method = "POST">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value = "Register">
+    <input type="submit" class="btn btn-primary" value = "Register">
 </form>
+</div>
 
 <div class="container mt-5">
     <h2 class="alert alert-primary">Time Table</h2>
